@@ -6,8 +6,11 @@ const dbConnection = require("./db")
 const controllers = require("./controllers")
 
 app.use(Express.json())
-app.use('/trip', controllers.tripController)
+
 app.use('/user', controllers.userController)
+
+app.use(require("./middleware/validate-jwt"))
+app.use('/trip', controllers.tripController)
 app.use('/test', (req, res) => {
     res.send('this is a message from the test endpoint of the server')
 })

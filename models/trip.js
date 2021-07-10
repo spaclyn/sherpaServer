@@ -18,6 +18,10 @@ const Trip = db.define("trip", {
         type: DataTypes.STRING,
         allowNull: true
     },
+    owner: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    }
 })
 
 
