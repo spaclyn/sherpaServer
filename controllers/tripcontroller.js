@@ -1,13 +1,11 @@
 const { Router } = require("express")
 const Express = require("express")
 const router = Express.Router()
-
-//add JWT validation
-
+let validateJWT = require("../middleware/validate-jwt")
 const { TripModel } = require("../models")
 
 
-router.get('/practice', (req, res) => {
+router.get('/practice', validateJWT, (req, res) => {
     res.send('Hey!! This is a practice route')
 })
 
@@ -16,7 +14,7 @@ Create a Trip
 /create
 */
 
-Router.post("/create", validateJWT, async (req, res) => {
+router.post("/create", validateJWT, async (req, res) => {
     const { country, state, city, date } = req.body.trip
     const { id } = req.user
     const tripEntry = {
@@ -32,7 +30,6 @@ Router.post("/create", validateJWT, async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err })
     }
-    TripModel.create(tripEntry)
 })
 
 /*
@@ -40,7 +37,7 @@ View all trips
 /
 */
 
-Router.get("/", async (req, res)=> {
+router.get("/", async (req, res)=> {
     try {
         const allTrips = await TripModel.findAll()
         res.status(200).json(allTrips)
@@ -54,7 +51,10 @@ View trips by user
 /mytrips
 */
 
-Router.get("/mytrips", validateJWT, async (req, res)=> { const { id } = req.user
+router.get("/mytrips", validateJWT, async (req, res)=> {
+    const {
+        id
+    } = req.user
     try {
         const userTrips = await TripModel.findAll({
             where: {
@@ -72,7 +72,7 @@ View trips by country
 /country
 */
 
-Router.get("/:country", async (req, res)=> { const { country } = req.params
+router.get("/:country", async (req, res)=> { const { country } = req.params
     try {
         const countryResults = await TripModel.findAll({
             where: {

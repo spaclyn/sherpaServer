@@ -14,7 +14,7 @@ router.post("/register", async (req, res) => {
             location
         })
 
-        let token = jwt.sign({id: User.id,}, process.env.JWT_SECRET, {expiresIn: 60 * 60 * 24})
+        let token = jwt.sign({id: User.id}, process.env.JWT_SECRET, {expiresIn: 60 * 60 * 24})
 
         res.status(201).json({
             message: "User successfully registered",
@@ -40,7 +40,7 @@ router.post("/login", async (req, res) => {
     try {
         const loginUser = await UserModel.findOne({
             where: {
-                email: email,
+                email: email
             }
         })
 
@@ -50,7 +50,7 @@ router.post("/login", async (req, res) => {
 
             if (passwordComparison) {
 
-            let token = jwt.sign({id: loginUser.id,}, process.env.JWT_SECRET, {expiresIn: 60 * 60 * 24})
+            let token = jwt.sign({ id: loginUser.id }, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 24 })
 
             res.status(200).json({
                 user: loginUser,
@@ -71,7 +71,7 @@ router.post("/login", async (req, res) => {
         }
         } catch (error) {
             res.status(500).json({
-                message: "Failed to log user in"
+                message: "Failed to log user in",
             })
         }
     })
