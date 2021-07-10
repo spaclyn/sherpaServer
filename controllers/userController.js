@@ -58,11 +58,15 @@ router.post("/login", async (req, res) => {
                 sessionToken: token
             })
 
+        } else {
+            res.status(401).json({
+                message: "Incorrect email or password"
+            })
         }
 
         } else {
             res.status(401).json({
-                message: "Login failed"
+                message: "Incorrect email or password"
             })
         }
         } catch (error) {
