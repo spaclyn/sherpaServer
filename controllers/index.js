@@ -1,3 +1,3 @@
 module.exports = {
-    entrycontroler: require("./entrycontroller"),
+    tripController: require("./tripcontroller"),
 }
