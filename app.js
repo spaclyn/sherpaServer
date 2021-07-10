@@ -1,15 +1,24 @@
 const Express = require("express")
 const app = Express();
+const dbConnection = require("./db")
 
 const controllers = require("./controllers")
 
-//if we no longer want 'trip' then change "/trip" here. dont change ANYTHING else
+app.use(Express.json())
 app.use('/trip', controllers.tripController)
-
+app.use('/user', controllers.userController)
 app.use('/test', (req, res) => {
     res.send('this is a message from the test endpoint of the server')
 })
 
-app.listen(3000, () => {
-    console.log(`[Server]: App is listening on 3000.`)
-})
+dbConnection.authenticate()
+    .then(() => dbConnection.sync())
+    .then(() => {
+        app.listen(3000, () => {
+            console.log(`[Server]: App is listening on 3000.`)
+        })
+    })
+    .catch((err) => {
+        console.log(`[Server]: Server crashed. Error = ${err}`)
+    })
+
