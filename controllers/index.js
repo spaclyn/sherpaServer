@@ -1,3 +1,4 @@
 module.exports = {
-    tripController: require("./tripcontroller"),
+    tripController: require("./tripController"),
+    userController: require('./userController')
 }
