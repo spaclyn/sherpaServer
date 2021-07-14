@@ -15,9 +15,10 @@ Create a Trip
 */
 
 router.post("/create", validateJWT, async (req, res) => {
-    const { country, state, city, date } = req.body.trip
+    const { type, country, state, city, date } = req.body.trip
     const { id } = req.user
     const tripEntry = {
+        type,
         country,
         state,
         city,
@@ -68,18 +69,18 @@ router.get("/mytrips", validateJWT, async (req, res)=> {
 })
 
 /*
-View trips by country
-/country
+View trips by type
+/type
 */
 
-router.get("/:country", async (req, res)=> { const { country } = req.params
+router.get("/:type", async (req, res)=> { const { type } = req.params
     try {
-        const countryResults = await TripModel.findAll({
+        const typeResults = await TripModel.findAll({
             where: {
-                country: country
+                type: type
             }
         })
-        res.status(200).json(countryResults)
+        res.status(200).json(typeResults)
     } catch (err) {
         res.status(500).json({ error: err })
     }
@@ -91,7 +92,7 @@ Updating Trips
 */
 
 router.put("/update/:tripId", validateJWT, async (req, res) => {
-    const { country, state, city, date } = req.body.trip
+    const { type, country, state, city, date } = req.body.trip
     const tripId = req.params.tripId
     const userId = req.user.id
 
@@ -103,6 +104,7 @@ router.put("/update/:tripId", validateJWT, async (req, res) => {
     }
 
     const updatedTrip = {
+        type: type,
         country: country,
         state: state,
         city: city,
