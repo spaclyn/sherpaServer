@@ -22,6 +22,10 @@ const Trip = db.define("trip", {
         type: DataTypes.DATE,
         allowNull: true
     },
+    details: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     owner: {
         type: DataTypes.INTEGER,
         allowNull: false

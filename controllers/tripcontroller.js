@@ -92,7 +92,7 @@ Updating Trips
 */
 
 router.put("/update/:tripId", validateJWT, async (req, res) => {
-    const { type, country, state, city, date } = req.body.trip
+    const { type, country, state, city, date, details } = req.body.trip
     const tripId = req.params.tripId
     const userId = req.user.id
 
@@ -108,7 +108,8 @@ router.put("/update/:tripId", validateJWT, async (req, res) => {
         country: country,
         state: state,
         city: city,
-        date: date
+        date: date,
+        details: details
     }
 
     try {
