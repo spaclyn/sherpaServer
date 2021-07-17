@@ -19,7 +19,7 @@ const Trip = db.define("trip", {
         allowNull: true
     },
     date: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: true
     },
     details: {
