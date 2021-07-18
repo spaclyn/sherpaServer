@@ -5,17 +5,13 @@ let validateJWT = require("../middleware/validate-jwt")
 const { TripModel } = require("../models")
 
 
-router.get('/practice', validateJWT, (req, res) => {
-    res.send('Hey!! This is a practice route')
-})
-
 /*
 Create a Trip
 /create
 */
 
 router.post("/create", validateJWT, async (req, res) => {
-    const { type, country, state, city, date } = req.body.trip
+    const { type, country, state, city, date, details } = req.body.trip
     const { id } = req.user
     const tripEntry = {
         type,
@@ -23,6 +19,7 @@ router.post("/create", validateJWT, async (req, res) => {
         state,
         city,
         date,
+        details,
         owner: id
     }
     try {
@@ -92,7 +89,7 @@ Updating Trips
 */
 
 router.put("/update/:tripId", validateJWT, async (req, res) => {
-    const { type, country, state, city, date } = req.body.trip
+    const { type, country, state, city, date, details } = req.body.trip
     const tripId = req.params.tripId
     const userId = req.user.id
 
@@ -108,7 +105,8 @@ router.put("/update/:tripId", validateJWT, async (req, res) => {
         country: country,
         state: state,
         city: city,
-        date: date
+        date: date,
+        details: details
     }
 
     try {
