@@ -89,10 +89,11 @@ Updating Trips
 */
 
 router.put("/update/:tripId", validateJWT, async (req, res) => {
-    const { type, country, state, city, date, details } = req.body.trip
+    const { type, country, state, city, date, details } = req.body
     const tripId = req.params.tripId
     const userId = req.user.id
 
+    console.log({ type, country, state, city, date, details, tripId, userId });
     const query = {
         where: {
             id: tripId,
@@ -109,12 +110,9 @@ router.put("/update/:tripId", validateJWT, async (req, res) => {
         details: details
     }
 
-    try {
         const update = await TripModel.update(updatedTrip, query)
         res.status(200).json(update)
-    } catch (err) {
-        res.status(500).json({ error: err })
-    }
+    
 })
 
 /*
@@ -124,7 +122,7 @@ Deleting Trips
 
 router.delete("/delete/:tripId", validateJWT, async (req, res) => {
     const ownerId = req.user.id
-    const tripId = req.params.id
+    const tripId = req.params.tripId
 
     try {
         const query = {
@@ -133,7 +131,7 @@ router.delete("/delete/:tripId", validateJWT, async (req, res) => {
                 owner: ownerId
             }
         }
-
+console.log("test");
         await TripModel.destroy(query)
         res.status(200).json({ message: "Trip Removed" })
     } catch (err) {
@@ -141,10 +139,5 @@ router.delete("/delete/:tripId", validateJWT, async (req, res) => {
     }
 })
 
-
-
-router.get('/about', (req, res) => {
-    res.send('Whatsup! This is our about route')
-})
 
 module.exports = router
