@@ -89,10 +89,11 @@ Updating Trips
 */
 
 router.put("/update/:tripId", validateJWT, async (req, res) => {
-    const { type, country, state, city, date, details } = req.body.trip
+    const { type, country, state, city, date, details } = req.body
     const tripId = req.params.tripId
     const userId = req.user.id
 
+    console.log({ type, country, state, city, date, details, tripId, userId });
     const query = {
         where: {
             id: tripId,
@@ -109,12 +110,12 @@ router.put("/update/:tripId", validateJWT, async (req, res) => {
         details: details
     }
 
-    try {
+    // try {
         const update = await TripModel.update(updatedTrip, query)
         res.status(200).json(update)
-    } catch (err) {
-        res.status(500).json({ error: err })
-    }
+    // // } catch (err) {
+    //     res.status(500).json({ error: err })
+    // }
 })
 
 /*
