@@ -3,5 +3,5 @@ const TripModel = require("./trip")
 
 module.exports = { 
     UserModel,
-    TripModel
+    TripModel,
 }
